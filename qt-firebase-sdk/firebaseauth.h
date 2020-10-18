@@ -17,6 +17,8 @@ public:
 signals:
     void createUserWithEmailAndPasswordSuccess(std::shared_ptr<FirebaseUser> user);
     void createUserWithEmailAndPasswordError(const QString& error);
+    void userSignedOut();
+    void userSignedIn(std::shared_ptr<FirebaseUser> user);
 
 private:
     firebase::auth::Auth* m_auth;   // The pointer will be deleted by the Firebase library.

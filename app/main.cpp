@@ -26,6 +26,14 @@ int main(int argc, char *argv[])
 
     std::shared_ptr<FirebaseUser> firebaseUser;
 
+    QObject::connect(&firebaseAuth, &FirebaseAuth::userSignedIn, [](std::shared_ptr<FirebaseUser> user){
+        qDebug() << "User signed in: " << user->email();
+    });
+
+    QObject::connect(&firebaseAuth, &FirebaseAuth::userSignedOut, [](){
+        qDebug() << "User signed out";
+    });
+
     QObject::connect(&firebaseAuth, &FirebaseAuth::createUserWithEmailAndPasswordSuccess, [&](std::shared_ptr<FirebaseUser> user){
         firebaseUser = user;
         qDebug() << "Created user with email: " << user->email();
