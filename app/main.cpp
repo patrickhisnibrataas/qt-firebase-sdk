@@ -24,29 +24,26 @@ int main(int argc, char *argv[])
     // Create firebase authentication for user and authentication purposes.
     FirebaseAuth firebaseAuth(firebaseApp);
 
-    std::shared_ptr<FirebaseUser> firebaseUser;
-
-    QObject::connect(&firebaseAuth, &FirebaseAuth::userSignedIn, [](std::shared_ptr<FirebaseUser> user){
-        qDebug() << "User signed in: " << user->email();
+    QObject::connect(&firebaseAuth, &FirebaseAuth::userSignedIn, [](FirebaseUser user){
+        qDebug() << "User signed in: " << user.email();
     });
 
     QObject::connect(&firebaseAuth, &FirebaseAuth::userSignedOut, [](){
         qDebug() << "User signed out";
     });
 
-    QObject::connect(&firebaseAuth, &FirebaseAuth::createUserWithEmailAndPasswordSuccess, [&](std::shared_ptr<FirebaseUser> user){
-        firebaseUser = user;
-        qDebug() << "Created user with email: " << user->email();
+    QObject::connect(&firebaseAuth, &FirebaseAuth::createUserWithEmailAndPasswordSuccess, [&](FirebaseUser user){
+        qDebug() << "Created user with email: " << user.email();
 
-        QObject::connect(firebaseUser.get(), &FirebaseUser::removeSuccess, [](){
+        QObject::connect(&user, &FirebaseUser::removeSuccess, [](){
             qDebug() << "User successfully removed";
         });
 
-        QObject::connect(firebaseUser.get(), &FirebaseUser::removeError, [](const QString& error){
+        QObject::connect(&user, &FirebaseUser::removeError, [](const QString& error){
             qDebug() << error;
         });
 
-        firebaseUser->remove();
+        user.remove();
     });
 
     QObject::connect(&firebaseAuth, &FirebaseAuth::createUserWithEmailAndPasswordError, [](const QString& error){
