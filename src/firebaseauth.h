@@ -3,8 +3,8 @@
 
 #include <QObject>
 #include <QMap>
-#include "firebaseapp.h"
 #include "firebase/auth.h"
+#include "firebaseapp.h"
 #include "firebaseuser.h"
 
 class FirebaseUser;

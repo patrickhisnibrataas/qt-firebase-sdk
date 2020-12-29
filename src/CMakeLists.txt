@@ -13,6 +13,7 @@ find_package(QT NAMES Qt6 Qt5 COMPONENTS Core REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core REQUIRED)
 find_package(firebase_app)
 find_package(firebase_auth)
+find_package(firebase_messaging)
 
 add_library(${PROJECT_NAME} STATIC
   firebaseapp.cpp
@@ -21,6 +22,8 @@ add_library(${PROJECT_NAME} STATIC
   firebaseauth.h
   firebaseuser.cpp
   firebaseuser.h
+  firebasemessaging.cpp
+  firebasemessaging.h
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
@@ -29,6 +32,6 @@ target_link_libraries(${PROJECT_NAME}
     PRIVATE
         Qt${QT_VERSION_MAJOR}::Core
     PUBLIC
-        firebase_app firebase_auth)
+        firebase_app firebase_auth firebase_messaging)
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE QTFIREBASESDK_LIBRARY)

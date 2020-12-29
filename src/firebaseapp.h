@@ -12,6 +12,7 @@ public:
 
 private:
     friend class FirebaseAuth;
+    friend class FirebaseMessaging;
     firebase::App* m_app; // The pointer will be deleted by the Firebase library.
 };
 
